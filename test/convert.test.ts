@@ -83,4 +83,10 @@ describe("fromCharlie2Delta", function () {
       expect(convertSID(key)).toBe(value);
     }
   });
+
+  it("should handle echelons with * instead of -", () => {
+    expect(convertLetterCode2NumberCode("SFGPUCIC--*E---")).toBe(
+      "10031000151211000002"
+    );
+  });
 });

@@ -42,7 +42,7 @@ function findSymbol(digits: string): string[] | undefined {
 export function convertLetterCode2NumberCode(letterSidc: string): string {
   const standardIdentity = letterSidc[1];
   const status = letterSidc[3];
-  const symbolModifier = letterSidc.substring(10, 12);
+  const symbolModifier = letterSidc.substring(10, 12).replace("*", "-");
 
   const normalizedSidc = normalizeLetterCode(letterSidc).slice(0, 10);
   const hit = findSymbol(normalizedSidc);
