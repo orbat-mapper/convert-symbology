@@ -89,4 +89,13 @@ describe("fromCharlie2Delta", function () {
       "10031000151211000002"
     );
   });
+
+  describe("edge cases", () => {
+    it("ground / unit / combat / field artillery / rocket", () => {
+      // This symbol is ambiguous
+      expect(convertLetterCode2NumberCode("SFGPUCFR-------")).toBe(
+        "10031000001303004100"
+      );
+    });
+  });
 });

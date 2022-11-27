@@ -6,6 +6,8 @@ const INPUT_FILE =
 const INPUT_FILE2 =
   "../../joint-military-symbology-xml/samples/legacy_support/All_ID_Mapping_Latest.csv";
 
+const SYMBOL_OVERRIDES = [["S*G*UCFR--", "10", "1303004100"]];
+
 async function loadData() {
   try {
     const data = await fs.readFile(INPUT_FILE2, { encoding: "utf8" });
@@ -40,6 +42,7 @@ const c = data
 
     return [letters, symbolSet, numbers];
   })
+  .concat(SYMBOL_OVERRIDES)
   .filter((e) => e) // remove empty entries
   .sort((aa, bb) => {
     // sort by letter SIDC
