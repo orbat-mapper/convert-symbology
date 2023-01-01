@@ -39,15 +39,29 @@ function findSymbol(digits: string): string[] | undefined {
   }
 }
 
-export function convertLetterCode2NumberCode(letterSidc: string): string {
+export interface Letter2NumberOptions {
+  fallbackSidc?: string;
+}
+
+export interface Letter2NumberResult {
+  sidc: string;
+  success: boolean;
+}
+
+export function convertLetterSidc2NumberSidc(
+  letterSidc: string,
+  options: Letter2NumberOptions = {}
+): Letter2NumberResult {
   const standardIdentity = letterSidc[1];
   const status = letterSidc[3];
   const symbolModifier = letterSidc.substring(10, 12).replace("*", "-");
 
   const normalizedSidc = normalizeLetterCode(letterSidc).slice(0, 10);
   const hit = findSymbol(normalizedSidc);
+  let sidc = "";
+  let success = false;
   if (hit) {
-    return [
+    sidc = [
       "10",
       SID_MAP[standardIdentity],
       hit[1],
@@ -55,6 +69,15 @@ export function convertLetterCode2NumberCode(letterSidc: string): string {
       SYMBOL_MODIFIER_MAP[symbolModifier] || "000",
       hit[2],
     ].join("");
+    success = true;
   }
-  return "";
+  return { sidc, success };
+}
+
+export function convertLetterCode2NumberCode(
+  letterSidc: string,
+  options: Letter2NumberOptions = {}
+): string {
+  const { sidc } = convertLetterSidc2NumberSidc(letterSidc, options);
+  return sidc;
 }

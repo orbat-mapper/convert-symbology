@@ -6,3 +6,4 @@ dist-ssr
 .idea
 stats.html
 scripts/test.json
+*.tgz

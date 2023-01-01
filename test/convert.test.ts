@@ -1,6 +1,9 @@
 import { expect, describe, it } from "vitest";
 
-import { convertLetterCode2NumberCode } from "../lib";
+import {
+  convertLetterCode2NumberCode,
+  convertLetterSidc2NumberSidc,
+} from "../lib";
 import { SID_MAP, STATUS_MAP } from "../lib/mappings";
 import { replaceCharAt } from "../lib/convert";
 
@@ -96,6 +99,19 @@ describe("fromCharlie2Delta", function () {
       expect(convertLetterCode2NumberCode("SFGPUCFR-------")).toBe(
         "10031000001303004100"
       );
+    });
+  });
+
+  describe("new interface", () => {
+    it("frigate", () => {
+      const { sidc, success } = convertLetterSidc2NumberSidc("SFSPCLFF----");
+      expect(sidc).toBe("10033000001202040000");
+      expect(success).toBe(true);
+    });
+    it("invalid SIDC should return success=false", () => {
+      const { sidc, success } = convertLetterSidc2NumberSidc("ILLEGALVALUE");
+      expect(sidc).toBe("");
+      expect(success).toBe(false);
     });
   });
 });
