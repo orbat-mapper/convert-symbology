@@ -25,4 +25,29 @@ describe("Convert from number to letters", function () {
       "SFGPUCIC---E---"
     );
   });
+
+  it("returns match=exact if exact", () => {
+    const { success, match } = convertNumberSidc2LetterSidc(
+      "10031000111211000002"
+    );
+    expect(success).toBe(true);
+    expect(match).toBe("exact");
+  });
+
+  it("returns match=failed if complete failure", () => {
+    const { success, match } = convertNumberSidc2LetterSidc(
+      "10032700001101010500"
+    );
+    expect(success).toBe(false);
+    expect(match).toBe("failed");
+  });
+
+  it("returns match=partial if partial", () => {
+    const { sidc, success, match } = convertNumberSidc2LetterSidc(
+      "10031000001211002004"
+    );
+    expect(sidc).toBe("SFGPUCI---------");
+    expect(success).toBe(false);
+    expect(match).toBe("partial");
+  });
 });

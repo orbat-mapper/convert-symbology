@@ -26,9 +26,12 @@ export interface Letter2NumberResult {
   success: boolean;
 }
 
+export type MatchType = "exact" | "partial" | "failed";
+
 export interface Number2LetterResult {
   sidc: string;
   success: boolean;
+  match: MatchType;
 }
 
 function findSymbol(digits: string): string[] | undefined {
@@ -92,7 +95,7 @@ export function convertLetterCode2NumberCode(
 export function convertNumberSidc2LetterSidc(
   numberSidc: string,
   options: Number2LetterOptions = {}
-): Letter2NumberResult {
+): Number2LetterResult {
   const parts = parseNumberSidc(numberSidc);
   const status = INVERTED_STATUS_MAP[parts.status];
   const standardIdentity =
@@ -102,15 +105,39 @@ export function convertNumberSidc2LetterSidc(
     parts.hqemt === "000" ? "---" : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt];
   const nCode = parts.mainIcon + parts.modifierOne + parts.modifierTwo;
 
-  const match = letter2numberTable.find(
+  const hit = letter2numberTable.find(
     ([letterCode, symbolSet, numericCode]) => {
       return symbolSet === parts.symbolSet && numericCode === nCode;
     }
   );
   let sic = "";
+  let match: MatchType = "failed";
 
-  if (match) {
-    sic = match[0];
+  if (hit) {
+    sic = hit[0];
+    match = "exact";
+  } else {
+    const partialCode = parts.mainIcon + parts.modifierOne + "00";
+    const secondHit = letter2numberTable.find(
+      ([letterCode, symbolSet, numericCode]) => {
+        return symbolSet === parts.symbolSet && numericCode === partialCode;
+      }
+    );
+    if (secondHit) {
+      sic = secondHit[0];
+      match = "partial";
+    } else {
+      const partialCode = parts.mainIcon + "0000";
+      const thirdHit = letter2numberTable.find(
+        ([letterCode, symbolSet, numericCode]) => {
+          return symbolSet === parts.symbolSet && numericCode === partialCode;
+        }
+      );
+      if (thirdHit) {
+        sic = thirdHit[0];
+        match = "partial";
+      }
+    }
   }
 
   return {
@@ -118,6 +145,7 @@ export function convertNumberSidc2LetterSidc(
       replaceCharAt(replaceCharAt(sic, 1, standardIdentity), 3, status) +
       symbolModifier +
       "---",
-    success: Boolean(match),
+    success: match === "exact",
+    match,
   };
 }
