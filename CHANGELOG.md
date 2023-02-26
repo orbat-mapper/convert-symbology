@@ -6,13 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Added `convertNumberSidc2LetterSidc` function for converting from number based SIDCs to letter based SIDCs.
+- Added CHANGELOG.md
+
+
 ### Changed
 
 - Added new main conversion interface `convertLetterSidc2NumberSidc` function.
 
-### Added
+### Fixed
 
-- Added CHANGELOG.md
+- Fix several symbol modifier mapping errors
 
 ## [0.1.3] - 2022-11-27
 
@@ -24,7 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
-- Handle symbol modifiers containing '*'s instead of '-'s.
+- Handle symbol modifiers containing '\*'s instead of '-'s.
 
 ## [0.1.0] - 2022-11-06
 

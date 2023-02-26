@@ -1,3 +1,5 @@
+import { invertMap } from "./helpers";
+
 export const SID_MAP: Record<string, string> = {
   P: "00", // pending
   U: "01", // unknown
@@ -14,6 +16,9 @@ export const SID_MAP: Record<string, string> = {
   J: "15", // joker
   K: "16", // faker
 };
+
+export const INVERTED_SID_MAP = invertMap(SID_MAP);
+
 export const STATUS_MAP: Record<string, string> = {
   P: "0", // present
   A: "1", // anticipated/planned
@@ -22,6 +27,9 @@ export const STATUS_MAP: Record<string, string> = {
   X: "4", // present destroyed
   F: "5", // present full to capacity
 };
+
+export const INVERTED_STATUS_MAP = invertMap(STATUS_MAP);
+
 export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   "--": "000", // null
   "-A": "011", // team/crew
@@ -38,7 +46,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   "-L": "024", // army group/front
   "-M": "025", // region
   "-N": "026", // command
-  "A-": "211", // HQ
+  "A-": "200", // HQ
   AA: "211", // HQ team/crew
   AB: "212", // HQ squad
   AC: "213", // HQ section
@@ -53,7 +61,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   AL: "224", // HQ army group/front
   AM: "225", // HQ region
   AN: "226", // HQ command
-  "B-": "211", // TF HQ
+  "B-": "600", // TF HQ
   BA: "611", // TF HQ team/crew
   BB: "612", // TF HQ squad
   BC: "613", // TF HQ section
@@ -68,7 +76,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   BL: "624", // TF HQ army group/front
   BM: "625", // TF HQ region
   BN: "626", // TF HQ command
-  "C-": "211", // FD
+  "C-": "300", // FD HQ
   CA: "311", // FD HQ team/crew
   CB: "312", // FD HQ squad
   CC: "313", // FD HQ section
@@ -83,7 +91,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   CL: "324", // FD HQ army group/front
   CM: "325", // FD HQ region
   CN: "326", // FD HQ command
-  "D-": "711", // FD TF HQ
+  "D-": "700", // FD TF HQ
   DA: "711", // FD TF team/crew
   DB: "712", // FD TF squad
   DC: "713", // FD TF section
@@ -98,7 +106,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   DL: "724", // FD TF army group/front
   DM: "725", // FD TF region
   DN: "726", // FD TF command
-  "E-": "211", // TF
+  "E-": "400", // TF
   EA: "411", // TF team/crew
   EB: "412", // TF squad
   EC: "413", // TF section
@@ -113,7 +121,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   EL: "424", // TF army group/front
   EM: "425", // TF region
   EN: "426", // TF command
-  "F-": "211", // FD
+  "F-": "100", // FD
   FA: "111", // FD team/crew
   FB: "112", // FD squad
   FC: "113", // FD section
@@ -128,7 +136,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   FL: "124", // FD army group/front
   FM: "125", // FD region
   FN: "126", // FD command
-  "G-": "211", // FD TF
+  "G-": "500", // FD TF
   GA: "511", // FD TF team/crew
   GB: "512", // FD TF squad
   GC: "513", // FD TF section
@@ -159,3 +167,6 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   NS: "061", // Towed array (short)
   NL: "062", // Towed array (long)
 };
+
+// Warning: some mappings are ambiguous
+export const INVERTED_SYMBOL_MODIFIER_MAP = invertMap(SYMBOL_MODIFIER_MAP);

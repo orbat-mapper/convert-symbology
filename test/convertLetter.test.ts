@@ -5,9 +5,9 @@ import {
   convertLetterSidc2NumberSidc,
 } from "../lib";
 import { SID_MAP, STATUS_MAP } from "../lib/mappings";
-import { replaceCharAt } from "../lib/convert";
+import { replaceCharAt } from "../lib/helpers";
 
-describe("fromCharlie2Delta", function () {
+describe("Convert from letters to number", function () {
   it("is exported", () => {
     expect(convertLetterCode2NumberCode).toBeDefined();
   });
@@ -51,7 +51,7 @@ describe("fromCharlie2Delta", function () {
   });
 
   it("arctic infantry squad", () => {
-    expect(convertLetterCode2NumberCode("SFGPUCIC---A---")).toBe(
+    expect(convertLetterCode2NumberCode("SFGPUCIC---A-")).toBe(
       "10031000111211000002"
     );
   });
