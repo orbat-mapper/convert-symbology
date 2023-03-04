@@ -120,5 +120,10 @@ describe("Convert from letters to number", function () {
       const { sidc } = convertLetterSidc2NumberSidc("SFG-UCI----J---");
       expect(sidc).toBe("10031000221211000000");
     });
+
+    it("SOF unit ground ranger", () => {
+      const { sidc } = convertLetterSidc2NumberSidc("SFFPGR---------");
+      expect(sidc).toBe("10031000001211007601");
+    });
   });
 });

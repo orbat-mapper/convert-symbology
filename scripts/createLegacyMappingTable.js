@@ -6,7 +6,13 @@ const INPUT_FILE =
 const INPUT_FILE2 =
   "../../joint-military-symbology-xml/samples/legacy_support/All_ID_Mapping_Latest.csv";
 
-const SYMBOL_OVERRIDES = [["S*G*UCFR--", "10", "1303004100"]];
+const ADDITIONAL_SYMBOLS = [
+  ["S*G*UCFR--", "10", "1303004100"],
+  ["S*F*GR----", "10", "1211007601"],
+];
+
+const OVERRIDE_SYMBOLS = [["S*F*GR----", "10", "1211007601"]];
+const overrideKeys = OVERRIDE_SYMBOLS.map((e) => e[0]);
 
 async function loadData() {
   try {
@@ -24,7 +30,11 @@ function replaceCharAt(text, index, replacementChar) {
   return text.substring(0, index) + replacementChar + text.substring(index + 1);
 }
 
-const c = data
+function uniqByKeepLast(a, key) {
+  return [...new Map(a.map((x) => [key(x), x])).values()];
+}
+
+const d = data
   .map((line) => {
     const { MainIcon, Modifier1, Modifier2, ExtraIcon, LegacyKey } = line;
     const letters = normalizeLetterCode(LegacyKey);
@@ -42,14 +52,16 @@ const c = data
 
     return [letters, symbolSet, numbers];
   })
-  .concat(SYMBOL_OVERRIDES)
-  .filter((e) => e) // remove empty entries
-  .sort((aa, bb) => {
-    // sort by letter SIDC
-    const a = aa[0];
-    const b = bb[0];
-    return a < b ? -1 : a > b ? 1 : 0;
-  });
+  .filter((e) => e && !overrideKeys.includes(e[0])) // remove empty entries
+  .concat(ADDITIONAL_SYMBOLS)
+  .concat(OVERRIDE_SYMBOLS);
+
+const c = uniqByKeepLast(d, (e) => JSON.stringify(e)).sort((aa, bb) => {
+  // sort by letter SIDC
+  const a = aa[0];
+  const b = bb[0];
+  return a < b ? -1 : a > b ? 1 : 0;
+});
 
 function normalizeLetterCode(sidc) {
   return replaceCharAt(replaceCharAt(sidc, 3, "*"), 1, "*");

@@ -35,4 +35,3 @@ console.log(sidc); // "SFGPUCIC---E---"
 
 Most symbols from 2525C/APP-6C are available in 2525D/APP-6D. However, many symbol variants from 2525D/APP-6D does not
 exist in older versions.
-
