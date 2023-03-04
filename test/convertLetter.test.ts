@@ -114,4 +114,11 @@ describe("Convert from letters to number", function () {
       expect(success).toBe(false);
     });
   });
+
+  describe("regressions", () => {
+    it("handles unspecified operational condition", () => {
+      const { sidc } = convertLetterSidc2NumberSidc("SFG-UCI----J---");
+      expect(sidc).toBe("10031000221211000000");
+    });
+  });
 });

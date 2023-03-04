@@ -75,7 +75,7 @@ export function convertLetterSidc2NumberSidc(
       "10",
       SID_MAP[standardIdentity],
       hit[1],
-      STATUS_MAP[status],
+      STATUS_MAP[status === "-" ? "P" : status],
       SYMBOL_MODIFIER_MAP[symbolModifier] || "000",
       hit[2],
     ].join("");

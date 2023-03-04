@@ -1,6 +1,6 @@
 {
   "name": "@orbat-mapper/convert-symbology",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Convert between letter based and number based symbol identification codes (MILSTD 2525/APP6",
   "type": "module",
   "files": [
