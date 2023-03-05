@@ -136,6 +136,30 @@ export function convertNumberSidc2LetterSidc(
       if (thirdHit) {
         sic = thirdHit[0];
         match = "partial";
+      } else {
+        const partialCode = parts.entity + parts.entityType + "000000";
+        const fourthHit = letter2numberTable.find(
+          ([letterCode, symbolSet, numericCode]) => {
+            return symbolSet === parts.symbolSet && numericCode === partialCode;
+          }
+        );
+        if (fourthHit) {
+          sic = fourthHit[0];
+          match = "partial";
+        } else {
+          const partialCode = parts.entity + "00000000";
+          const fifthHit = letter2numberTable.find(
+            ([letterCode, symbolSet, numericCode]) => {
+              return (
+                symbolSet === parts.symbolSet && numericCode === partialCode
+              );
+            }
+          );
+          if (fifthHit) {
+            sic = fifthHit[0];
+            match = "partial";
+          }
+        }
       }
     }
   }

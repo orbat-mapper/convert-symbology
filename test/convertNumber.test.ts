@@ -6,14 +6,6 @@ describe("Convert from number to letters", function () {
     expect(convertNumberSidc2LetterSidc).toBeDefined();
   });
 
-  it("frigate", () => {
-    const { sidc, success } = convertNumberSidc2LetterSidc(
-      "10033000001202040000"
-    );
-    expect(sidc).toBe("SFSPCLFF--------");
-    expect(success).toBe(true);
-  });
-
   it("arctic infantry squad", () => {
     expect(convertNumberSidc2LetterSidc("10031000111211000002").sidc).toBe(
       "SFGPUCIC---A---"
@@ -49,5 +41,39 @@ describe("Convert from number to letters", function () {
     expect(sidc).toBe("SFGPUCI---------");
     expect(success).toBe(false);
     expect(match).toBe("partial");
+  });
+
+  describe("Surface units", () => {
+    it("frigate", () => {
+      const { sidc, success } = convertNumberSidc2LetterSidc(
+        "10033000001202040000"
+      );
+      expect(sidc).toBe("SFSPCLFF--------");
+      expect(success).toBe(true);
+    });
+
+    it("patrol boat general with helicopter", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10033000001205001900"
+      );
+      expect(sidc).toBe("SFSPCP----------");
+      expect(match).toBe("partial");
+    });
+
+    it("Amphibious Command Ship", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10033000001203010000"
+      );
+      expect(sidc).toBe("SFSPCA----------");
+      expect(match).toBe("partial");
+    });
+
+    it("Aux Ship Oiler", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10033000001301100000"
+      );
+      expect(sidc).toBe("SFSPNR----------");
+      expect(match).toBe("partial");
+    });
   });
 });
