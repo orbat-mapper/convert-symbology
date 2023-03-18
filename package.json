@@ -20,7 +20,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "lint-fix": "prettier --write ."
+    "lint-fix": "prettier --write .",
+    "prepare": "build"
   },
   "repository": {
     "type": "git",
