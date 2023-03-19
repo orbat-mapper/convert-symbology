@@ -19,11 +19,12 @@ describe("Convert from number to letters", function () {
   });
 
   it("returns match=exact if exact", () => {
-    const { success, match } = convertNumberSidc2LetterSidc(
+    const { success, match, sidc } = convertNumberSidc2LetterSidc(
       "10031000111211000002"
     );
     expect(success).toBe(true);
     expect(match).toBe("exact");
+    expect(sidc.length).toBe(15);
   });
 
   it("returns match=failed if complete failure", () => {
@@ -38,7 +39,8 @@ describe("Convert from number to letters", function () {
     const { sidc, success, match } = convertNumberSidc2LetterSidc(
       "10031000001211002004"
     );
-    expect(sidc).toBe("SFGPUCI---------");
+    expect(sidc).toBe("SFGPUCI--------");
+    expect(sidc.length).toBe(15);
     expect(success).toBe(false);
     expect(match).toBe("partial");
   });
@@ -48,7 +50,8 @@ describe("Convert from number to letters", function () {
       const { sidc, success } = convertNumberSidc2LetterSidc(
         "10033000001202040000"
       );
-      expect(sidc).toBe("SFSPCLFF--------");
+      expect(sidc.length).toBe(15);
+      expect(sidc).toBe("SFSPCLFF-------");
       expect(success).toBe(true);
     });
 
@@ -56,7 +59,8 @@ describe("Convert from number to letters", function () {
       const { sidc, match } = convertNumberSidc2LetterSidc(
         "10033000001205001900"
       );
-      expect(sidc).toBe("SFSPCP----------");
+      expect(sidc).toBe("SFSPCP---------");
+      expect(sidc.length).toBe(15);
       expect(match).toBe("partial");
     });
 
@@ -64,7 +68,8 @@ describe("Convert from number to letters", function () {
       const { sidc, match } = convertNumberSidc2LetterSidc(
         "10033000001203010000"
       );
-      expect(sidc).toBe("SFSPCA----------");
+      expect(sidc).toBe("SFSPCA---------");
+      expect(sidc.length).toBe(15);
       expect(match).toBe("partial");
     });
 
@@ -72,7 +77,8 @@ describe("Convert from number to letters", function () {
       const { sidc, match } = convertNumberSidc2LetterSidc(
         "10033000001301100000"
       );
-      expect(sidc).toBe("SFSPNR----------");
+      expect(sidc).toBe("SFSPNR---------");
+      expect(sidc.length).toBe(15);
       expect(match).toBe("partial");
     });
   });

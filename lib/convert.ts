@@ -102,7 +102,7 @@ export function convertNumberSidc2LetterSidc(
     INVERTED_SID_MAP[parts.context + parts.standardIdentity];
 
   const symbolModifier =
-    parts.hqemt === "000" ? "---" : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt];
+    parts.hqemt === "000" ? "--" : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt];
   const nCode = parts.mainIcon + parts.modifierOne + parts.modifierTwo;
 
   const hit = letter2numberTable.find(
