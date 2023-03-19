@@ -21,7 +21,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "lint-fix": "prettier --write .",
-    "prepare": "build"
+    "prepare": "tsc && vite build"
   },
   "repository": {
     "type": "git",
