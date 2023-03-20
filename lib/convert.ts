@@ -58,6 +58,7 @@ export function convertLetterSidc2NumberSidc(
   const hit = findSymbol(normalizedSidc);
   let sidc = "";
   let success = false;
+  let match: MatchType = "failed";
   if (hit) {
     sidc = [
       "10",
@@ -68,8 +69,9 @@ export function convertLetterSidc2NumberSidc(
       hit[2],
     ].join("");
     success = true;
+    match = "exact";
   }
-  return { sidc, success };
+  return { sidc, success, match };
 }
 
 export function convertLetterCode2NumberCode(

@@ -9,6 +9,7 @@ export interface Number2LetterOptions {}
 export interface Letter2NumberResult {
   sidc: string;
   success: boolean;
+  match: MatchType;
 }
 
 export interface Number2LetterResult {

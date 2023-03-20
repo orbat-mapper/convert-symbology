@@ -104,14 +104,18 @@ describe("Convert from letters to number", function () {
 
   describe("new interface", () => {
     it("frigate", () => {
-      const { sidc, success } = convertLetterSidc2NumberSidc("SFSPCLFF----");
+      const { sidc, success, match } =
+        convertLetterSidc2NumberSidc("SFSPCLFF----");
       expect(sidc).toBe("10033000001202040000");
       expect(success).toBe(true);
+      expect(match).toBe("exact");
     });
     it("invalid SIDC should return success=false", () => {
-      const { sidc, success } = convertLetterSidc2NumberSidc("ILLEGALVALUE");
+      const { sidc, success, match } =
+        convertLetterSidc2NumberSidc("ILLEGALVALUE");
       expect(sidc).toBe("");
       expect(success).toBe(false);
+      expect(match).toBe("failed");
     });
   });
 
