@@ -4,12 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [unreleased]
+## [0.3.0] - 2023-03-19
 
 ### Changed
 
 - added `match` to the return object from `convertLetterSidc2NumberSidc`. Possible values are currently `exact`
   and `failed`.
+
+### Fixed
+
+- handle unknown numeric SID and HQMT values.
 
 ## [0.2.5] - 2023-03-19
 
