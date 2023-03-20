@@ -89,10 +89,12 @@ export function convertNumberSidc2LetterSidc(
   const parts = parseNumberSidc(numberSidc);
   const status = INVERTED_STATUS_MAP[parts.status];
   const standardIdentity =
-    INVERTED_SID_MAP[parts.context + parts.standardIdentity];
+    INVERTED_SID_MAP[parts.context + parts.standardIdentity] || "U";
 
   const symbolModifier =
-    parts.hqemt === "000" ? "--" : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt];
+    parts.hqemt === "000"
+      ? "--"
+      : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt] || "--";
   const nCode = parts.mainIcon + parts.modifierOne + parts.modifierTwo;
 
   const hit = letter2numberTable.find(

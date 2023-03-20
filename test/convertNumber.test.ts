@@ -55,6 +55,15 @@ describe("Convert from number to letters", function () {
       expect(success).toBe(true);
     });
 
+    it("unknown sid should be U", () => {
+      const { sidc, success } = convertNumberSidc2LetterSidc(
+        "10073000001202040000"
+      );
+      expect(sidc.length).toBe(15);
+      expect(sidc).toBe("SUSPCLFF-------");
+      expect(success).toBe(true);
+    });
+
     it("patrol boat general with helicopter", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
         "10033000001205001900"
