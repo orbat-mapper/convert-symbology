@@ -14,25 +14,13 @@ import {
   parseNumberSidc,
   replaceCharAt,
 } from "./helpers";
-
-export interface Letter2NumberOptions {
-  fallbackSidc?: string;
-}
-
-export interface Number2LetterOptions {}
-
-export interface Letter2NumberResult {
-  sidc: string;
-  success: boolean;
-}
-
-export type MatchType = "exact" | "partial" | "failed";
-
-export interface Number2LetterResult {
-  sidc: string;
-  success: boolean;
-  match: MatchType;
-}
+import type {
+  Letter2NumberOptions,
+  Letter2NumberResult,
+  MatchType,
+  Number2LetterOptions,
+  Number2LetterResult,
+} from "./types";
 
 function findSymbol(digits: string): string[] | undefined {
   let beginning = 0,
