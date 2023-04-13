@@ -108,5 +108,13 @@ describe("Convert from number to letters", function () {
       expect(sidc).toBe("GFTPW----------");
       expect(match).toBe("exact");
     });
+
+    it("TACGRP.MOBSU.OBST.WREOBS.USP", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10032500002903010000"
+      );
+      expect(sidc).toBe("GFMPOWU--------");
+      expect(match).toBe("exact");
+    });
   });
 });

@@ -51,7 +51,9 @@ export function convertLetterSidc2NumberSidc(
   letterSidc: string,
   options: Letter2NumberOptions = {}
 ): Letter2NumberResult {
-  const { standardIdentity, status } = parseLetterSidc(letterSidc);
+  const { standardIdentity, status } = parseLetterSidc(
+    letterSidc.replace("*", "-")
+  );
   const symbolModifier = letterSidc.substring(10, 12).replace("*", "-");
 
   const normalizedSidc = normalizeLetterCode(letterSidc).slice(0, 10);
@@ -62,7 +64,7 @@ export function convertLetterSidc2NumberSidc(
   if (hit) {
     sidc = [
       "10",
-      SID_MAP[standardIdentity],
+      SID_MAP[standardIdentity === "-" ? "F" : standardIdentity],
       hit[1],
       STATUS_MAP[status === "-" ? "P" : status],
       SYMBOL_MODIFIER_MAP[symbolModifier] || "000",

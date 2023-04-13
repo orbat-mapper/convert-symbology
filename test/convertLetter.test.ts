@@ -49,6 +49,12 @@ describe("Convert from letters to number", function () {
         "10032500003424000000"
       );
     });
+
+    it("TACGRP.MOBSU.OBST.WREOBS.USP", () => {
+      expect(convertLetterCode2NumberCode("G-M-OWU-------X")).toBe(
+        "10032500002903010000"
+      );
+    });
   });
 
   it("infantry", () => {
@@ -102,6 +108,16 @@ describe("Convert from letters to number", function () {
 
   it("should handle echelons with * instead of -", () => {
     expect(convertLetterCode2NumberCode("SFGPUCIC--*E---")).toBe(
+      "10031000151211000002"
+    );
+  });
+
+  it("should handle standard identities with - or *", () => {
+    expect(convertLetterCode2NumberCode("S-GPUCIC---E---")).toBe(
+      "10031000151211000002"
+    );
+
+    expect(convertLetterCode2NumberCode("S*GPUCIC---E---")).toBe(
       "10031000151211000002"
     );
   });
