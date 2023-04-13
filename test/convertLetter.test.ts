@@ -38,6 +38,19 @@ describe("Convert from letters to number", function () {
     });
   });
 
+  describe("tactical graphics", () => {
+    it("TACGRP.TSK.FLWASS", () => {
+      expect(convertLetterCode2NumberCode("GFTPA-----****X")).toBe(
+        "10032500003412000000"
+      );
+    });
+    it("TACGRP.TSK.WDR", () => {
+      expect(convertLetterCode2NumberCode("GFTPW-----****X")).toBe(
+        "10032500003424000000"
+      );
+    });
+  });
+
   it("infantry", () => {
     expect(convertLetterCode2NumberCode("SFGPUCI-----")).toBe(
       "10031000001211000000"
