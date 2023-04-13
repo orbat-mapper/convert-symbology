@@ -91,4 +91,22 @@ describe("Convert from number to letters", function () {
       expect(match).toBe("partial");
     });
   });
+
+  describe("tactical graphics", () => {
+    it("TACGRP.TSK.FLWASS", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10032500003412000000"
+      );
+      expect(sidc).toBe("GFTPA----------");
+      expect(match).toBe("exact");
+    });
+
+    it("TACGRP.TSK.WDR", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10032500003424000000"
+      );
+      expect(sidc).toBe("GFTPW----------");
+      expect(match).toBe("exact");
+    });
+  });
 });
