@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## unreleased
+
+### Fixed
+
+- A standard identity value of '-' or '*' is interpreted as 'F'.
+- A status value of '-' or '*' is interpreted as 'P'.
+
+### Changed
+
+- Added `closest` value to the `match` property of the return object from `convertLetterSidc2NumberSidc`. This value
+  indicates that the conversion was not exact, but that the closest match was used.
+
 ## [0.3.0] - 2023-03-19
 
 ### Changed
