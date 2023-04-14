@@ -1,4 +1,4 @@
-export type MatchType = "exact" | "partial" | "failed";
+export type MatchType = "exact" | "partial" | "closest" | "failed";
 
 export interface Letter2NumberOptions {
   fallbackSidc?: string;

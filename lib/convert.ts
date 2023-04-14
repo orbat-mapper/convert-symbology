@@ -22,6 +22,7 @@ import type {
   Number2LetterResult,
 } from "./types";
 
+// search for the symbol in the array using binary search
 function findSymbol(digits: string): string[] | undefined {
   let beginning = 0,
     end = letter2numberTable.length,
@@ -47,20 +48,44 @@ function findSymbol(digits: string): string[] | undefined {
   }
 }
 
+function findClosestSymbol(digits: string): string[] | undefined {
+  const rest = digits.slice(0, 4);
+  const functionId = digits.slice(4);
+  let prefix = functionId.split("-")[0];
+  while (prefix.length >= 1) {
+    const match = letter2numberTable.find((a) =>
+      a[0].startsWith(rest + prefix)
+    );
+    if (match) return match;
+    prefix = prefix.slice(0, -1);
+  }
+  return undefined;
+}
+
 export function convertLetterSidc2NumberSidc(
   letterSidc: string,
   options: Letter2NumberOptions = {}
 ): Letter2NumberResult {
   const { standardIdentity, status } = parseLetterSidc(
-    letterSidc.replace("*", "-")
+    letterSidc.replaceAll("*", "-")
   );
-  const symbolModifier = letterSidc.substring(10, 12).replace("*", "-");
+  const symbolModifier = letterSidc.substring(10, 12).replaceAll("*", "-");
 
   const normalizedSidc = normalizeLetterCode(letterSidc).slice(0, 10);
-  const hit = findSymbol(normalizedSidc);
   let sidc = "";
   let success = false;
   let match: MatchType = "failed";
+  let hit = findSymbol(normalizedSidc);
+  if (hit) {
+    match = "exact";
+    success = true;
+  } else {
+    hit = findClosestSymbol(normalizedSidc);
+    if (hit) {
+      match = "closest";
+    }
+  }
+
   if (hit) {
     sidc = [
       "10",
@@ -70,8 +95,6 @@ export function convertLetterSidc2NumberSidc(
       SYMBOL_MODIFIER_MAP[symbolModifier] || "000",
       hit[2],
     ].join("");
-    success = true;
-    match = "exact";
   }
   return { sidc, success, match };
 }

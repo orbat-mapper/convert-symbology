@@ -55,6 +55,30 @@ describe("Convert from letters to number", function () {
         "10032500002903010000"
       );
     });
+
+    it("TACGRP.MOBSU.OBST.WREOBS", () => {
+      const { sidc, match } = convertLetterSidc2NumberSidc("G-M-OW--------X");
+      expect(match).toBe("exact");
+      expect(sidc).toBe("10032500002903000000");
+    });
+
+    it("TACGRP.MOBSU.OBSTBP", () => {
+      const { sidc, match } = convertLetterSidc2NumberSidc("G-M-B----------");
+      expect(match).toBe("exact");
+      expect(sidc).toBe("10032500002706000000");
+    });
+
+    it("TACGRP.MOBSU.OBST.AVN", () => {
+      const { sidc, match } = convertLetterSidc2NumberSidc("G-M-OH---------");
+      expect(sidc).toBe("10032500002820000000");
+      expect(match).toBe("exact");
+    });
+
+    it("TACGRP.MOBSU.OBST.AVN.TWR", () => {
+      const { sidc, match } = convertLetterSidc2NumberSidc("G-M-OHT--------");
+      expect(match).toBe("closest");
+      expect(["10032500002820010000", "10032500002820020000"]).toContain(sidc);
+    });
   });
 
   it("infantry", () => {
@@ -118,6 +142,16 @@ describe("Convert from letters to number", function () {
     );
 
     expect(convertLetterCode2NumberCode("S*GPUCIC---E---")).toBe(
+      "10031000151211000002"
+    );
+  });
+
+  it("should handle status with - or *", () => {
+    expect(convertLetterCode2NumberCode("SFG-UCIC---E---")).toBe(
+      "10031000151211000002"
+    );
+
+    expect(convertLetterCode2NumberCode("SFG*UCIC---E---")).toBe(
       "10031000151211000002"
     );
   });
