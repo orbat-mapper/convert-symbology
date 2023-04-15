@@ -49,15 +49,15 @@ function findSymbol(digits: string): string[] | undefined {
 }
 
 function findClosestSymbol(digits: string): string[] | undefined {
-  const rest = digits.slice(0, 4);
+  const prefix = digits.slice(0, 4);
   const functionId = digits.slice(4);
-  let prefix = functionId.split("-")[0];
-  while (prefix.length >= 1) {
-    const match = letter2numberTable.find((a) =>
-      a[0].startsWith(rest + prefix)
+  let partialFunctionId = functionId.split("-")[0];
+  while (partialFunctionId.length >= 1) {
+    const match = letter2numberTable.find(([letters]) =>
+      letters.startsWith(prefix + partialFunctionId)
     );
     if (match) return match;
-    prefix = prefix.slice(0, -1);
+    partialFunctionId = partialFunctionId.slice(0, -1);
   }
   return undefined;
 }
