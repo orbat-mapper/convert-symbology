@@ -4,12 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## unreleased
+## [1.0.0] - 2023-04-15
+
+### Added
+
+- Improved documentation.
 
 ### Fixed
 
-- A standard identity value of '-' or '*' is interpreted as 'F'.
-- A status value of '-' or '*' is interpreted as 'P'.
+- A standard identity value of '-' or '\*' is interpreted as 'F'.
+- A status value of '-' or '\*' is interpreted as 'P'.
 
 ### Changed
 
