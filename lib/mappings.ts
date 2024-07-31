@@ -153,6 +153,11 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   GN: "526", // FD TF command
   "H-": "000", // Installation
   HB: "100", // FD Installation
+  "K-": "000", // NUCLEAR YIELD IN KILOTONS (obsolete, APP-6B)
+  "M-": "000", // Mobility equipment (obsolete, APP-6B)
+  MF: "000", // Mobility Equipment Fixed Wing (obsolete, APP-6B)
+  MH: "000", // Mobility Equipment Helicopter (obsolete, APP-6B)
+  MM: "000", // Mobility Equipment Missile (obsolete, APP-6B)
   MO: "031", // Mobility wheeled limited
   MP: "032", // Mobility cross-country
   MQ: "033", // Tracked
@@ -166,6 +171,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   MY: "052", // Amphibious
   NS: "061", // Towed array (short)
   NL: "062", // Towed array (long)
+  "S-": "000", // Mobility space (obsolete, APP-6B)
 };
 
 // Warning: some mappings are ambiguous
