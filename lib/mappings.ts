@@ -161,7 +161,7 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
   MT: "036", // Rail
   MU: "041", // Over snow
   MV: "042", // Sled
-  MW: "047", // Pack animals
+  MW: "037", // Pack animals
   MX: "051", // Barge
   MY: "052", // Amphibious
   NS: "061", // Towed array (short)
