@@ -4,11 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.0.2] - 2024-07-31
+
+### Fixed
+
+- Add a few missing legacy size/mobility mappings (reported by [@carlocorradin](https://github.com/carlocorradini)
+  in [#12](https://github.com/orbat-mapper/convert-symbology/issues/12)
+  and [#11](https://github.com/orbat-mapper/convert-symbology/issues/11)
+
 ## [1.0.1] - 2024-07-31
 
 ### Fixed
 
-- Use correct code for MV (Pack Animals) (by @carlocorradini in #9)
+- Use correct code for MV (Pack Animals) (by [@carlocorradini](https://github.com/carlocorradini)
+  in [#9](https://github.com/orbat-mapper/convert-symbology/issues/9))
 
 ## [1.0.0] - 2023-04-15
 
