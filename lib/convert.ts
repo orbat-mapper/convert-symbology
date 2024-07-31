@@ -54,7 +54,7 @@ function findClosestSymbol(digits: string): string[] | undefined {
   let partialFunctionId = functionId.split("-")[0];
   while (partialFunctionId.length >= 1) {
     const match = letter2numberTable.find(([letters]) =>
-      letters.startsWith(prefix + partialFunctionId)
+      letters.startsWith(prefix + partialFunctionId),
     );
     if (match) return match;
     partialFunctionId = partialFunctionId.slice(0, -1);
@@ -64,10 +64,10 @@ function findClosestSymbol(digits: string): string[] | undefined {
 
 export function convertLetterSidc2NumberSidc(
   letterSidc: string,
-  options: Letter2NumberOptions = {}
+  options: Letter2NumberOptions = {},
 ): Letter2NumberResult {
   const { standardIdentity, status } = parseLetterSidc(
-    letterSidc.replaceAll("*", "-")
+    letterSidc.replaceAll("*", "-"),
   );
   const symbolModifier = letterSidc.substring(10, 12).replaceAll("*", "-");
 
@@ -101,7 +101,7 @@ export function convertLetterSidc2NumberSidc(
 
 export function convertLetterCode2NumberCode(
   letterSidc: string,
-  options: Letter2NumberOptions = {}
+  options: Letter2NumberOptions = {},
 ): string {
   const { sidc } = convertLetterSidc2NumberSidc(letterSidc, options);
   return sidc;
@@ -109,7 +109,7 @@ export function convertLetterCode2NumberCode(
 
 export function convertNumberSidc2LetterSidc(
   numberSidc: string,
-  options: Number2LetterOptions = {}
+  options: Number2LetterOptions = {},
 ): Number2LetterResult {
   const parts = parseNumberSidc(numberSidc);
   const status = INVERTED_STATUS_MAP[parts.status];
@@ -125,7 +125,7 @@ export function convertNumberSidc2LetterSidc(
   const hit = letter2numberTable.find(
     ([letterCode, symbolSet, numericCode]) => {
       return symbolSet === parts.symbolSet && numericCode === nCode;
-    }
+    },
   );
   let sic = "";
   let match: MatchType = "failed";
@@ -138,7 +138,7 @@ export function convertNumberSidc2LetterSidc(
     const secondHit = letter2numberTable.find(
       ([letterCode, symbolSet, numericCode]) => {
         return symbolSet === parts.symbolSet && numericCode === partialCode;
-      }
+      },
     );
     if (secondHit) {
       sic = secondHit[0];
@@ -148,7 +148,7 @@ export function convertNumberSidc2LetterSidc(
       const thirdHit = letter2numberTable.find(
         ([letterCode, symbolSet, numericCode]) => {
           return symbolSet === parts.symbolSet && numericCode === partialCode;
-        }
+        },
       );
       if (thirdHit) {
         sic = thirdHit[0];
@@ -158,7 +158,7 @@ export function convertNumberSidc2LetterSidc(
         const fourthHit = letter2numberTable.find(
           ([letterCode, symbolSet, numericCode]) => {
             return symbolSet === parts.symbolSet && numericCode === partialCode;
-          }
+          },
         );
         if (fourthHit) {
           sic = fourthHit[0];
@@ -170,7 +170,7 @@ export function convertNumberSidc2LetterSidc(
               return (
                 symbolSet === parts.symbolSet && numericCode === partialCode
               );
-            }
+            },
           );
           if (fifthHit) {
             sic = fifthHit[0];

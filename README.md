@@ -78,7 +78,7 @@ console.log(success); // false;
 import { convertNumberSidc2LetterSidc } from "@orbat-mapper/convert-symbology";
 
 const { sidc, match, success } = convertNumberSidc2LetterSidc(
-  "10031000151211000002"
+  "10031000151211000002",
 );
 console.log(sidc); // "SFGPUCIC---E---"
 console.log(match); // "exact";
@@ -86,7 +86,7 @@ console.log(success); // true;
 
 // Convert "Bicyle equipped infantry with dog".
 const { sidc, match, success } = convertNumberSidc2LetterSidc(
-  "10031000001211002004"
+  "10031000001211002004",
 );
 // This symbol does not exist in 2525C. Picking partial match Unit - Combat . Infantry
 console.log(sidc); // "SFGPUCI--------"
@@ -103,7 +103,7 @@ Type declarations
 ```typescript
 function convertLetterSidc2NumberSidc(
   letterSidc: string,
-  options?: Letter2NumberOptions
+  options?: Letter2NumberOptions,
 ): Letter2NumberResult;
 
 interface Letter2NumberOptions {}
@@ -124,7 +124,7 @@ Type declarations
 ```typescript
 function convertNumberSidc2LetterSidc(
   numberSidc: string,
-  options?: Number2LetterOptions
+  options?: Number2LetterOptions,
 ): Number2LetterResult;
 
 interface Number2LetterOptions {}

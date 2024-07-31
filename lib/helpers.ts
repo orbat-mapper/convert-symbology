@@ -1,7 +1,7 @@
 export function replaceCharAt(
   text: string,
   index: number,
-  replacementChar: string
+  replacementChar: string,
 ) {
   return text.substring(0, index) + replacementChar + text.substring(index + 1);
 }
@@ -11,7 +11,7 @@ export function normalizeLetterCode(sidc: string) {
 }
 
 export function invertMap(
-  objMap: Record<string, string>
+  objMap: Record<string, string>,
 ): Record<string, string> {
   return Object.fromEntries(Object.entries(objMap).map((a) => a.reverse()));
 }

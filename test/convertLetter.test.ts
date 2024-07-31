@@ -19,13 +19,13 @@ describe("Convert from letters to number", function () {
   describe("surface units", () => {
     it("frigate", () => {
       expect(convertLetterCode2NumberCode("SFSPCLFF----")).toBe(
-        "10033000001202040000"
+        "10033000001202040000",
       );
     });
 
     it("littoral combatant towed array (short", () => {
       expect(convertLetterCode2NumberCode("SFSPCLLL--NS")).toBe(
-        "10033000611202060000"
+        "10033000611202060000",
       );
     });
   });
@@ -33,7 +33,7 @@ describe("Convert from letters to number", function () {
   describe("installations", () => {
     it("dam", () => {
       expect(convertLetterCode2NumberCode("EFFPMB----H****")).toBe(
-        "10032000001214020000"
+        "10032000001214020000",
       );
     });
   });
@@ -41,18 +41,18 @@ describe("Convert from letters to number", function () {
   describe("tactical graphics", () => {
     it("TACGRP.TSK.FLWASS", () => {
       expect(convertLetterCode2NumberCode("GFTPA-----****X")).toBe(
-        "10032500003412000000"
+        "10032500003412000000",
       );
     });
     it("TACGRP.TSK.WDR", () => {
       expect(convertLetterCode2NumberCode("GFTPW-----****X")).toBe(
-        "10032500003424000000"
+        "10032500003424000000",
       );
     });
 
     it("TACGRP.MOBSU.OBST.WREOBS.USP", () => {
       expect(convertLetterCode2NumberCode("G-M-OWU-------X")).toBe(
-        "10032500002903010000"
+        "10032500002903010000",
       );
     });
 
@@ -83,33 +83,33 @@ describe("Convert from letters to number", function () {
 
   it("infantry", () => {
     expect(convertLetterCode2NumberCode("SFGPUCI-----")).toBe(
-      "10031000001211000000"
+      "10031000001211000000",
     );
   });
 
   it("arctic infantry company", () => {
     expect(convertLetterCode2NumberCode("SFGPUCIC---E---")).toBe(
-      "10031000151211000002"
+      "10031000151211000002",
     );
   });
 
   it("arctic infantry squad", () => {
     expect(convertLetterCode2NumberCode("SFGPUCIC---A-")).toBe(
-      "10031000111211000002"
+      "10031000111211000002",
     );
   });
 
   it("pumping station", () => {
     // EFFPME----H****
     expect(convertLetterCode2NumberCode("EFFPME----")).toBe(
-      "10032000001214050000"
+      "10032000001214050000",
     );
   });
 
   it("converts status", () => {
     const convertStatus = (letterStatus: string): string => {
       return convertLetterCode2NumberCode(
-        replaceCharAt("SFGPUCI-----", 3, letterStatus)
+        replaceCharAt("SFGPUCI-----", 3, letterStatus),
       )[6];
     };
 
@@ -121,7 +121,7 @@ describe("Convert from letters to number", function () {
   it("converts standard identity", () => {
     const convertSID = (letterSid: string): string => {
       return convertLetterCode2NumberCode(
-        replaceCharAt("SFGPUCI-----", 1, letterSid)
+        replaceCharAt("SFGPUCI-----", 1, letterSid),
       ).substring(2, 4);
     };
 
@@ -132,27 +132,27 @@ describe("Convert from letters to number", function () {
 
   it("should handle echelons with * instead of -", () => {
     expect(convertLetterCode2NumberCode("SFGPUCIC--*E---")).toBe(
-      "10031000151211000002"
+      "10031000151211000002",
     );
   });
 
   it("should handle standard identities with - or *", () => {
     expect(convertLetterCode2NumberCode("S-GPUCIC---E---")).toBe(
-      "10031000151211000002"
+      "10031000151211000002",
     );
 
     expect(convertLetterCode2NumberCode("S*GPUCIC---E---")).toBe(
-      "10031000151211000002"
+      "10031000151211000002",
     );
   });
 
   it("should handle status with - or *", () => {
     expect(convertLetterCode2NumberCode("SFG-UCIC---E---")).toBe(
-      "10031000151211000002"
+      "10031000151211000002",
     );
 
     expect(convertLetterCode2NumberCode("SFG*UCIC---E---")).toBe(
-      "10031000151211000002"
+      "10031000151211000002",
     );
   });
 
@@ -160,7 +160,7 @@ describe("Convert from letters to number", function () {
     it("ground / unit / combat / field artillery / rocket", () => {
       // This symbol is ambiguous
       expect(convertLetterCode2NumberCode("SFGPUCFR-------")).toBe(
-        "10031000001303004100"
+        "10031000001303004100",
       );
     });
   });

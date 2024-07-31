@@ -8,19 +8,19 @@ describe("Convert from number to letters", function () {
 
   it("arctic infantry squad", () => {
     expect(convertNumberSidc2LetterSidc("10031000111211000002").sidc).toBe(
-      "SFGPUCIC---A---"
+      "SFGPUCIC---A---",
     );
   });
 
   it("arctic infantry company", () => {
     expect(convertNumberSidc2LetterSidc("10031000151211000002").sidc).toBe(
-      "SFGPUCIC---E---"
+      "SFGPUCIC---E---",
     );
   });
 
   it("returns match=exact if exact", () => {
     const { success, match, sidc } = convertNumberSidc2LetterSidc(
-      "10031000111211000002"
+      "10031000111211000002",
     );
     expect(success).toBe(true);
     expect(match).toBe("exact");
@@ -29,7 +29,7 @@ describe("Convert from number to letters", function () {
 
   it("returns match=failed if complete failure", () => {
     const { success, match } = convertNumberSidc2LetterSidc(
-      "10032700001101010500"
+      "10032700001101010500",
     );
     expect(success).toBe(false);
     expect(match).toBe("failed");
@@ -37,7 +37,7 @@ describe("Convert from number to letters", function () {
 
   it("returns match=partial if partial", () => {
     const { sidc, success, match } = convertNumberSidc2LetterSidc(
-      "10031000001211002004"
+      "10031000001211002004",
     );
     expect(sidc).toBe("SFGPUCI--------");
     expect(sidc.length).toBe(15);
@@ -48,7 +48,7 @@ describe("Convert from number to letters", function () {
   describe("Surface units", () => {
     it("frigate", () => {
       const { sidc, success } = convertNumberSidc2LetterSidc(
-        "10033000001202040000"
+        "10033000001202040000",
       );
       expect(sidc.length).toBe(15);
       expect(sidc).toBe("SFSPCLFF-------");
@@ -57,7 +57,7 @@ describe("Convert from number to letters", function () {
 
     it("unknown sid should be U", () => {
       const { sidc, success } = convertNumberSidc2LetterSidc(
-        "10073000001202040000"
+        "10073000001202040000",
       );
       expect(sidc.length).toBe(15);
       expect(sidc).toBe("SUSPCLFF-------");
@@ -66,7 +66,7 @@ describe("Convert from number to letters", function () {
 
     it("patrol boat general with helicopter", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10033000001205001900"
+        "10033000001205001900",
       );
       expect(sidc).toBe("SFSPCP---------");
       expect(sidc.length).toBe(15);
@@ -75,7 +75,7 @@ describe("Convert from number to letters", function () {
 
     it("Amphibious Command Ship", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10033000001203010000"
+        "10033000001203010000",
       );
       expect(sidc).toBe("SFSPCA---------");
       expect(sidc.length).toBe(15);
@@ -84,7 +84,7 @@ describe("Convert from number to letters", function () {
 
     it("Aux Ship Oiler", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10033000001301100000"
+        "10033000001301100000",
       );
       expect(sidc).toBe("SFSPNR---------");
       expect(sidc.length).toBe(15);
@@ -95,7 +95,7 @@ describe("Convert from number to letters", function () {
   describe("tactical graphics", () => {
     it("TACGRP.TSK.FLWASS", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10032500003412000000"
+        "10032500003412000000",
       );
       expect(sidc).toBe("GFTPA----------");
       expect(match).toBe("exact");
@@ -103,7 +103,7 @@ describe("Convert from number to letters", function () {
 
     it("TACGRP.TSK.WDR", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10032500003424000000"
+        "10032500003424000000",
       );
       expect(sidc).toBe("GFTPW----------");
       expect(match).toBe("exact");
@@ -111,7 +111,7 @@ describe("Convert from number to letters", function () {
 
     it("TACGRP.MOBSU.OBST.WREOBS.USP", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10032500002903010000"
+        "10032500002903010000",
       );
       expect(sidc).toBe("GFMPOWU--------");
       expect(match).toBe("exact");
