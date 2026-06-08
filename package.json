@@ -3,25 +3,24 @@
   "version": "1.0.2",
   "description": "Convert between letter based and number based symbol identification codes (MILSTD 2525/APP6)",
   "type": "module",
+  "packageManager": "pnpm@10.28.2",
   "files": [
     "dist"
   ],
-  "main": "./dist/convert-symbology.umd.cjs",
-  "module": "./dist/convert-symbology.js",
+  "main": "./dist/convert-symbology.mjs",
+  "module": "./dist/convert-symbology.mjs",
   "exports": {
     ".": {
-      "import": "./dist/convert-symbology.js",
-      "require": "./dist/convert-symbology.cjs"
+      "types": "./dist/convert-symbology.d.mts",
+      "default": "./dist/convert-symbology.mjs"
     }
   },
-  "types": "./dist/convert-symbology.d.ts",
+  "types": "./dist/convert-symbology.d.mts",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "build": "tsdown",
     "test": "vitest",
     "lint-fix": "prettier --write .",
-    "prepare": "tsc && vite build"
+    "prepare": "tsdown"
   },
   "repository": {
     "type": "git",
@@ -34,12 +33,12 @@
   },
   "homepage": "https://github.com/orbat-mapper/convert-symbology#readme",
   "devDependencies": {
-    "@vitest/ui": "^2.0.5",
+    "@vitest/ui": "^4.1.8",
     "d3-dsv": "^3.0.1",
     "prettier": "^3.6.2",
-    "typescript": "5.4",
-    "vite": "^5.4.21",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^2.0.5"
+    "tsdown": "^0.22.2",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8"
   }
 }
