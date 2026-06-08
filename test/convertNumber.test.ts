@@ -84,11 +84,11 @@ describe("Convert from number to letters", function () {
 
     it("Aux Ship Oiler", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
-        "10033000001301100000",
+        "10033000001301110000",
       );
       expect(sidc).toBe("SFSPNR---------");
       expect(sidc.length).toBe(15);
-      expect(match).toBe("partial");
+      expect(match).toBe("exact");
     });
   });
 
