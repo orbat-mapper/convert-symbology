@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { parseLetterSidc, parseNumberSidc } from "../lib/helpers";
+import {
+  formatLetterSidc,
+  formatNumberSidc,
+  parseLetterSidc,
+  parseNumberSidc,
+} from "../lib/helpers";
 
 describe("Parse letter SIDC", function () {
   const testSidc = "ABCDEFGHIJKLMNO";
@@ -37,5 +42,47 @@ describe("Parse numeric SIDC", function () {
   it("gets main icon", () => {
     const s = parseNumberSidc(testSidc);
     expect(s.mainIcon).toBe("667788");
+  });
+});
+
+describe("Format number SIDC", function () {
+  it("inverts parseNumberSidc", () => {
+    const sidc = "10033000001202040000";
+    const p = parseNumberSidc(sidc);
+    expect(
+      formatNumberSidc({
+        version: p.version,
+        standardIdentity: p.context + p.standardIdentity,
+        symbolSet: p.symbolSet,
+        status: p.status,
+        amplifier: p.hqemt,
+        numericCode: p.mainIcon + p.modifierOne + p.modifierTwo,
+      }),
+    ).toBe(sidc);
+  });
+
+  it("defaults the version to 10", () => {
+    const sidc = formatNumberSidc({
+      standardIdentity: "03",
+      symbolSet: "30",
+      status: "0",
+      amplifier: "000",
+      numericCode: "1202040000",
+    });
+    expect(sidc).toBe("10033000001202040000");
+    expect(sidc.length).toBe(20);
+  });
+});
+
+describe("Format letter SIDC", function () {
+  it("places fields by position", () => {
+    const sidc = formatLetterSidc({
+      letterCode: "S*S*CLFF--",
+      standardIdentity: "F",
+      status: "P",
+      symbolModifier: "--",
+    });
+    expect(sidc).toBe("SFSPCLFF-------");
+    expect(sidc.length).toBe(15);
   });
 });

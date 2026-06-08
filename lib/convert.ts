@@ -7,13 +7,14 @@ import {
   SYMBOL_MODIFIER_MAP,
 } from "./mappings";
 
-import letter2numberTable from "./legacydata.json";
 import {
+  formatLetterSidc,
+  formatNumberSidc,
   normalizeLetterCode,
   parseLetterSidc,
   parseNumberSidc,
-  replaceCharAt,
 } from "./helpers";
+import { findByNumeric, findClosest, findExact } from "./lookupTable";
 import type {
   Letter2NumberOptions,
   Letter2NumberResult,
@@ -22,81 +23,38 @@ import type {
   Number2LetterResult,
 } from "./types";
 
-// search for the symbol in the array using binary search
-function findSymbol(digits: string): string[] | undefined {
-  let beginning = 0,
-    end = letter2numberTable.length,
-    target;
-  if (!end) {
-    return;
-  }
-  while (true) {
-    target = (beginning + end) >> 1;
-    if (
-      (target === end || target === beginning) &&
-      letter2numberTable[target][0] !== digits
-    ) {
-      return;
-    }
-    if (letter2numberTable[target][0] > digits) {
-      end = target;
-    } else if (letter2numberTable[target][0] < digits) {
-      beginning = target;
-    } else {
-      return letter2numberTable[target];
-    }
-  }
-}
-
-function findClosestSymbol(digits: string): string[] | undefined {
-  const prefix = digits.slice(0, 4);
-  const functionId = digits.slice(4);
-  let partialFunctionId = functionId.split("-")[0];
-  while (partialFunctionId.length >= 1) {
-    const match = letter2numberTable.find(([letters]) =>
-      letters.startsWith(prefix + partialFunctionId),
-    );
-    if (match) return match;
-    partialFunctionId = partialFunctionId.slice(0, -1);
-  }
-  return undefined;
-}
-
 export function convertLetterSidc2NumberSidc(
   letterSidc: string,
   options: Letter2NumberOptions = {},
 ): Letter2NumberResult {
-  const { standardIdentity, status } = parseLetterSidc(
+  const { standardIdentity, status, symbolModifier } = parseLetterSidc(
     letterSidc.replaceAll("*", "-"),
   );
-  const symbolModifier = letterSidc.substring(10, 12).replaceAll("*", "-");
 
   const normalizedSidc = normalizeLetterCode(letterSidc).slice(0, 10);
   let sidc = "";
-  let success = false;
   let match: MatchType = "failed";
-  let hit = findSymbol(normalizedSidc);
+  let hit = findExact(normalizedSidc);
   if (hit) {
     match = "exact";
-    success = true;
   } else {
-    hit = findClosestSymbol(normalizedSidc);
+    hit = findClosest(normalizedSidc);
     if (hit) {
       match = "closest";
     }
   }
 
   if (hit) {
-    sidc = [
-      "10",
-      SID_MAP[standardIdentity === "-" ? "F" : standardIdentity],
-      hit[1],
-      STATUS_MAP[status === "-" ? "P" : status],
-      SYMBOL_MODIFIER_MAP[symbolModifier] || "000",
-      hit[2],
-    ].join("");
+    sidc = formatNumberSidc({
+      standardIdentity:
+        SID_MAP[standardIdentity === "-" ? "F" : standardIdentity],
+      symbolSet: hit.symbolSet,
+      status: STATUS_MAP[status === "-" ? "P" : status],
+      amplifier: SYMBOL_MODIFIER_MAP[symbolModifier] || "000",
+      numericCode: hit.numericCode,
+    });
   }
-  return { sidc, success, match };
+  return { sidc, success: match === "exact", match };
 }
 
 export function convertLetterCode2NumberCode(
@@ -120,72 +78,17 @@ export function convertNumberSidc2LetterSidc(
     parts.hqemt === "000"
       ? "--"
       : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt] || "--";
-  const nCode = parts.mainIcon + parts.modifierOne + parts.modifierTwo;
-
-  const hit = letter2numberTable.find(
-    ([letterCode, symbolSet, numericCode]) => {
-      return symbolSet === parts.symbolSet && numericCode === nCode;
-    },
-  );
-  let sic = "";
-  let match: MatchType = "failed";
-
-  if (hit) {
-    sic = hit[0];
-    match = "exact";
-  } else {
-    const partialCode = parts.mainIcon + parts.modifierOne + "00";
-    const secondHit = letter2numberTable.find(
-      ([letterCode, symbolSet, numericCode]) => {
-        return symbolSet === parts.symbolSet && numericCode === partialCode;
-      },
-    );
-    if (secondHit) {
-      sic = secondHit[0];
-      match = "partial";
-    } else {
-      const partialCode = parts.mainIcon + "0000";
-      const thirdHit = letter2numberTable.find(
-        ([letterCode, symbolSet, numericCode]) => {
-          return symbolSet === parts.symbolSet && numericCode === partialCode;
-        },
-      );
-      if (thirdHit) {
-        sic = thirdHit[0];
-        match = "partial";
-      } else {
-        const partialCode = parts.entity + parts.entityType + "000000";
-        const fourthHit = letter2numberTable.find(
-          ([letterCode, symbolSet, numericCode]) => {
-            return symbolSet === parts.symbolSet && numericCode === partialCode;
-          },
-        );
-        if (fourthHit) {
-          sic = fourthHit[0];
-          match = "partial";
-        } else {
-          const partialCode = parts.entity + "00000000";
-          const fifthHit = letter2numberTable.find(
-            ([letterCode, symbolSet, numericCode]) => {
-              return (
-                symbolSet === parts.symbolSet && numericCode === partialCode
-              );
-            },
-          );
-          if (fifthHit) {
-            sic = fifthHit[0];
-            match = "partial";
-          }
-        }
-      }
-    }
-  }
+  const found = findByNumeric(parts);
+  const sic = found ? found.entry.letterCode : "";
+  const match: MatchType = found ? found.match : "failed";
 
   return {
-    sidc:
-      replaceCharAt(replaceCharAt(sic, 1, standardIdentity), 3, status) +
-      symbolModifier +
-      "---",
+    sidc: formatLetterSidc({
+      letterCode: sic,
+      standardIdentity,
+      status,
+      symbolModifier,
+    }),
     success: match === "exact",
     match,
   };

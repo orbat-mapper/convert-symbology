@@ -69,3 +69,72 @@ export function parseNumberSidc(sic: string) {
     mainIcon,
   };
 }
+
+/** Fields assembled into a 15-character letter SIDC by `formatLetterSidc`. */
+export interface LetterSidcFields {
+  /** The 10-character base code (coding scheme, battle dimension, function id). */
+  letterCode: string;
+  /** Standard identity character, placed at position 1. */
+  standardIdentity: string;
+  /** Status character, placed at position 3. */
+  status: string;
+  /** Symbol modifier, placed at positions 10–11. */
+  symbolModifier: string;
+}
+
+/**
+ * Inverse of `parseLetterSidc`: overlays standard identity and status onto a
+ * 10-character base code, then appends the symbol modifier and the trailing
+ * "---" placeholder to make a 15-character letter SIDC.
+ */
+export function formatLetterSidc({
+  letterCode,
+  standardIdentity,
+  status,
+  symbolModifier,
+}: LetterSidcFields): string {
+  const head = replaceCharAt(
+    replaceCharAt(letterCode, 1, standardIdentity),
+    3,
+    status,
+  );
+  return head + symbolModifier + "---";
+}
+
+/** Fields assembled into a 20-character number SIDC by `formatNumberSidc`. */
+export interface NumberSidcFields {
+  /** Version, positions 0–2. Defaults to "10". */
+  version?: string;
+  /** Context + standard identity, positions 2–4 (2 characters). */
+  standardIdentity: string;
+  /** Symbol set, positions 4–6. */
+  symbolSet: string;
+  /** Status, position 6. */
+  status: string;
+  /** HQ/task-force/echelon amplifier block, positions 7–10 (3 characters). */
+  amplifier: string;
+  /** Entity + entity type/subtype + modifiers, positions 10–20 (10 characters). */
+  numericCode: string;
+}
+
+/**
+ * Inverse of `parseNumberSidc`: concatenates the fields of a number SIDC in
+ * position order into a 20-character code.
+ */
+export function formatNumberSidc({
+  version = "10",
+  standardIdentity,
+  symbolSet,
+  status,
+  amplifier,
+  numericCode,
+}: NumberSidcFields): string {
+  return [
+    version,
+    standardIdentity,
+    symbolSet,
+    status,
+    amplifier,
+    numericCode,
+  ].join("");
+}
