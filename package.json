@@ -20,7 +20,10 @@
     "build": "tsdown",
     "test": "vitest",
     "lint-fix": "prettier --write .",
-    "prepare": "tsdown"
+    "prepare": "tsdown",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "changeset publish"
   },
   "repository": {
     "type": "git",
@@ -33,6 +36,8 @@
   },
   "homepage": "https://github.com/orbat-mapper/convert-symbology#readme",
   "devDependencies": {
+    "@changesets/changelog-github": "^0.7.0",
+    "@changesets/cli": "^2.31.0",
     "@vitest/ui": "^4.1.8",
     "d3-dsv": "^3.0.1",
     "prettier": "^3.6.2",
