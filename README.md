@@ -21,8 +21,7 @@ converted correctly.
 ## Installation
 
 ```bash
-# or pnpm or yarn
-npm install @orbat-mapper/convert-symbology
+pnpm add @orbat-mapper/convert-symbology
 ```
 
 ## Usage
