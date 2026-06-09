@@ -48,3 +48,17 @@ the sibling [joint-military-symbology-xml](https://github.com/Esri/joint-militar
 project (expected at `../../joint-military-symbology-xml/...`). It applies manual overrides
 (`ADDITIONAL_SYMBOLS`, `OVERRIDE_SYMBOLS`) for symbols missing or wrong upstream. Edit those
 override lists rather than hand-editing the generated JSON.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in GitHub Issues (`orbat-mapper/convert-symbology`). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Using default label vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context repo — one `CONTEXT.md` + `docs/adr/` at the root. See `docs/agents/domain.md`.
