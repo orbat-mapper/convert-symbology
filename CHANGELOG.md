@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.0
+
+### Major Changes
+
+- [#17](https://github.com/orbat-mapper/convert-symbology/pull/17) [`ed0bc5e`](https://github.com/orbat-mapper/convert-symbology/commit/ed0bc5e3c46c8065273ee9fd8d3d4d265db70b6b) Thanks [@kjellmf](https://github.com/kjellmf)! - The package is now ESM-only.
+
+  **What changed:** The build tooling was switched to tsdown (and the repo to pnpm),
+  and the package no longer ships a CommonJS build. Only the ESM entry point
+  (`dist/convert-symbology.mjs`) and its types (`dist/convert-symbology.d.mts`) are
+  published.
+
+  **Why:** The library is `"type": "module"` and the toolchain was modernized; maintaining
+  a dual CJS/ESM build added complexity for no real benefit to consumers.
+
+  **How to update:** Consume the package from an ESM context — use `import` rather than
+  `require()`. If you're on CommonJS, switch to ESM or load it via a dynamic
+  `await import("@orbat-mapper/convert-symbology")`. Bundlers and modern Node (with
+  `"type": "module"` or `.mjs`) work without changes.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
