@@ -193,4 +193,13 @@ describe("Convert from letters to number", function () {
       expect(sidc).toBe("10031000001211007601");
     });
   });
+
+  describe("letter codes mapped to several numeric codes", () => {
+    it("always picks the first one", () => {
+      // S-A-W----- is both 01 Weapon (Air) and 02 Missile (Air Missile)
+      expect(convertLetterCode2NumberCode("SFAPW----------")).toBe(
+        "10030100001300000000",
+      );
+    });
+  });
 });

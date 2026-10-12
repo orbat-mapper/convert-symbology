@@ -43,6 +43,10 @@ function findSymbol(digits: string): string[] | undefined {
     } else if (letter2numberTable[target][0] < digits) {
       beginning = target;
     } else {
+      // several rows can share a letter code: return the first one
+      while (target > 0 && letter2numberTable[target - 1][0] === digits) {
+        target--;
+      }
       return letter2numberTable[target];
     }
   }
