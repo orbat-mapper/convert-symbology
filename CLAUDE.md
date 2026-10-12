@@ -35,11 +35,16 @@ parsers (`parseLetterSidc`, `parseNumberSidc`) that split a code string into fie
 
 ### Matching strategy
 
-- **Letter → Number**: exact lookup; if missing, `findClosestSymbol` progressively shortens the
-  function-id suffix to find the closest matching prefix (`match: "closest"`).
+- **Letter → Number**: exact lookup (first row when a letter code maps to several numeric codes);
+  if missing, `findClosestSymbol` progressively shortens the function-id suffix to find the closest
+  matching prefix, then falls back to the bare frame row (`prefix + "------"`) (`match: "closest"`).
 - **Number → Letter**: exact lookup by `(symbolSet, numericCode)`; if missing, falls back through
   progressively broader partial-code matches (icon+modifier1 → icon-only → entity+entityType →
-  entity-only), each yielding `match: "partial"`.
+  entity-only → bare frame `0000000000`), then to the frame of a related symbol set
+  (`SYMBOL_SET_FRAME_FALLBACK`), each yielding `match: "partial"`.
+
+Frames (symbols without an icon) are regular rows of the lookup table, with the numeric code
+`0000000000`; they are added through `ADDITIONAL_SYMBOLS`.
 
 ### Regenerating the lookup table
 
