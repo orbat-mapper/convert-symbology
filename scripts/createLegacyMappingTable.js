@@ -30,6 +30,9 @@ const ADDITIONAL_SYMBOLS = [
   ["I*G*------", "52", "0000000000"],
   ["I*S*------", "53", "0000000000"],
   ["I*U*------", "54", "0000000000"],
+
+  // Crewed space vehicle: listed upstream without a 2525D code
+  ["S*P*V-----", "05", "1101000000"],
 ];
 
 const OVERRIDE_SYMBOLS = [["S*F*GR----", "10", "1211007601"]];

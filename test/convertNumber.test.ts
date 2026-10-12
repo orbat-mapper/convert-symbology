@@ -92,6 +92,16 @@ describe("Convert from number to letters", function () {
     });
   });
 
+  describe("space", () => {
+    it("crewed space vehicle", () => {
+      const { sidc, match } = convertNumberSidc2LetterSidc(
+        "10030500001101000000",
+      );
+      expect(sidc).toBe("SFPPV----------");
+      expect(match).toBe("exact");
+    });
+  });
+
   describe("tactical graphics", () => {
     it("TACGRP.TSK.FLWASS", () => {
       const { sidc, match } = convertNumberSidc2LetterSidc(
