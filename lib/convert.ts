@@ -62,6 +62,15 @@ function findClosestSymbol(digits: string): string[] | undefined {
   return undefined;
 }
 
+function findLetterCode(
+  symbolSet: string,
+  numericCode: string,
+): string | undefined {
+  return letter2numberTable.find(
+    ([, ss, code]) => ss === symbolSet && code === numericCode,
+  )?.[0];
+}
+
 export function convertLetterSidc2NumberSidc(
   letterSidc: string,
   options: Letter2NumberOptions = {},
@@ -122,62 +131,24 @@ export function convertNumberSidc2LetterSidc(
       : INVERTED_SYMBOL_MODIFIER_MAP[parts.hqemt] || "--";
   const nCode = parts.mainIcon + parts.modifierOne + parts.modifierTwo;
 
-  const hit = letter2numberTable.find(
-    ([letterCode, symbolSet, numericCode]) => {
-      return symbolSet === parts.symbolSet && numericCode === nCode;
-    },
-  );
+  // from the most to the least specific numeric code; anything but the
+  // first one is a partial match
+  const candidateCodes = [
+    nCode,
+    parts.mainIcon + parts.modifierOne + "00",
+    parts.mainIcon + "0000",
+    parts.entity + parts.entityType + "000000",
+    parts.entity + "00000000",
+  ];
+
   let sic = "";
   let match: MatchType = "failed";
-
-  if (hit) {
-    sic = hit[0];
-    match = "exact";
-  } else {
-    const partialCode = parts.mainIcon + parts.modifierOne + "00";
-    const secondHit = letter2numberTable.find(
-      ([letterCode, symbolSet, numericCode]) => {
-        return symbolSet === parts.symbolSet && numericCode === partialCode;
-      },
-    );
-    if (secondHit) {
-      sic = secondHit[0];
-      match = "partial";
-    } else {
-      const partialCode = parts.mainIcon + "0000";
-      const thirdHit = letter2numberTable.find(
-        ([letterCode, symbolSet, numericCode]) => {
-          return symbolSet === parts.symbolSet && numericCode === partialCode;
-        },
-      );
-      if (thirdHit) {
-        sic = thirdHit[0];
-        match = "partial";
-      } else {
-        const partialCode = parts.entity + parts.entityType + "000000";
-        const fourthHit = letter2numberTable.find(
-          ([letterCode, symbolSet, numericCode]) => {
-            return symbolSet === parts.symbolSet && numericCode === partialCode;
-          },
-        );
-        if (fourthHit) {
-          sic = fourthHit[0];
-          match = "partial";
-        } else {
-          const partialCode = parts.entity + "00000000";
-          const fifthHit = letter2numberTable.find(
-            ([letterCode, symbolSet, numericCode]) => {
-              return (
-                symbolSet === parts.symbolSet && numericCode === partialCode
-              );
-            },
-          );
-          if (fifthHit) {
-            sic = fifthHit[0];
-            match = "partial";
-          }
-        }
-      }
+  for (const [index, code] of candidateCodes.entries()) {
+    const hit = findLetterCode(parts.symbolSet, code);
+    if (hit) {
+      sic = hit;
+      match = index === 0 ? "exact" : "partial";
+      break;
     }
   }
 
