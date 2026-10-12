@@ -176,3 +176,12 @@ export const SYMBOL_MODIFIER_MAP: Record<string, string> = {
 
 // Warning: some mappings are ambiguous
 export const INVERTED_SYMBOL_MODIFIER_MAP = invertMap(SYMBOL_MODIFIER_MAP);
+
+// Symbol sets with no 2525C frame of their own, mapped to the symbol set whose
+// frame they share. Used as a last resort when converting number -> letter.
+export const SYMBOL_SET_FRAME_FALLBACK: Record<string, string> = {
+  "02": "01", // air missile -> air
+  "06": "05", // space missile -> space
+  "11": "10", // land civilian unit/organization -> land unit
+  "36": "35", // mine warfare -> sea subsurface
+};

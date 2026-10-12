@@ -5,6 +5,7 @@ import {
   SID_MAP,
   STATUS_MAP,
   SYMBOL_MODIFIER_MAP,
+  SYMBOL_SET_FRAME_FALLBACK,
 } from "./mappings";
 
 import letter2numberTable from "./legacydata.json";
@@ -21,6 +22,8 @@ import type {
   Number2LetterOptions,
   Number2LetterResult,
 } from "./types";
+
+const NO_ICON = "0000000000";
 
 // search for the symbol in the array using binary search
 function findSymbol(digits: string): string[] | undefined {
@@ -63,7 +66,9 @@ function findClosestSymbol(digits: string): string[] | undefined {
     if (match) return match;
     partialFunctionId = partialFunctionId.slice(0, -1);
   }
-  return undefined;
+
+  // nothing left of the function ID: fall back to the bare frame, if any
+  return findSymbol(prefix + "------");
 }
 
 function findLetterCode(
@@ -143,6 +148,7 @@ export function convertNumberSidc2LetterSidc(
     parts.mainIcon + "0000",
     parts.entity + parts.entityType + "000000",
     parts.entity + "00000000",
+    NO_ICON,
   ];
 
   let sic = "";
@@ -153,6 +159,15 @@ export function convertNumberSidc2LetterSidc(
       sic = hit;
       match = index === 0 ? "exact" : "partial";
       break;
+    }
+  }
+
+  const fallbackSymbolSet = SYMBOL_SET_FRAME_FALLBACK[parts.symbolSet];
+  if (match === "failed" && fallbackSymbolSet) {
+    const hit = findLetterCode(fallbackSymbolSet, NO_ICON);
+    if (hit) {
+      sic = hit;
+      match = "partial";
     }
   }
 
