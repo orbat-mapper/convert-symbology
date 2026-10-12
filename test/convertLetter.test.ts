@@ -30,6 +30,14 @@ describe("Convert from letters to number", function () {
     });
   });
 
+  describe("space", () => {
+    it("crewed space vehicle", () => {
+      const { sidc, match } = convertLetterSidc2NumberSidc("SFPPV----------");
+      expect(sidc).toBe("10030500001101000000");
+      expect(match).toBe("exact");
+    });
+  });
+
   describe("installations", () => {
     it("dam", () => {
       expect(convertLetterCode2NumberCode("EFFPMB----H****")).toBe(
